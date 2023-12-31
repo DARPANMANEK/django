@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fonts and Stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+        crossorigin="anonymous">
+
+    <title>Register</title>
+
+    <!-- Custom Scripts -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+   
+</head>
+
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="form-block">
+                                <span class="mb-0 text">
+                                    {% if msg %}
+                                    {{ msg | safe }}
+                                    {% else %}
+                                    Registration page
+                                    {% endif %}
+                                </span>
+                               
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.username.label_tag }} {{ form.username }}
+
+                                    {{ form.email.label_tag }} {{ form.email }}
+
+                                    {{ form.password1.label_tag }} {{ form.password1 }}
+
+                                    {{ form.password2.label_tag }} {{ form.password2 }}
+                                    
+                                    {{ form.user_role.label_tag }} {{ form.user_role }}
+                                    {{ form.event.label_tag }} {{ form.event }}
+
+                                    <div id="id_event_div" {% if form.user_role.value != 'participant' %}style="display: none;"{% endif %}>
+                                        {{ form.event.label_tag }} {{ form.event }}
+                                    </div>
+                                    <span class="text-error">{{ form.errors }}</span>
+                                    <input type="submit" value="Register"
+                                        class="btn btn-pill text-white btn-block btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

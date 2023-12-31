@@ -23,8 +23,33 @@
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var userRoleField = document.querySelector('#id_user_role');
+            var eventlistField = document.querySelector('#eventList');
+            var eventField = document.querySelector('#eventField');
+    
+            function toggleEventField() {
+                if (userRoleField.value === 'participant') {
+                    eventField.style.display = 'block';
+                    eventlistField.style.display ="none";
 
-   
+                }else if(userRoleField.value === 'admin') {
+                    eventlistField.style.display ="block";
+                    eventField.style.display = 'none';
+
+                }
+                else {
+                    eventlistField.style.display ="none";
+                    eventField.style.display = 'none';
+                }
+            }
+    
+            toggleEventField(); // Call initially to set the display based on initial value
+    
+            userRoleField.addEventListener('change', toggleEventField);
+        });
+    </script>
 </head>
 
 <body>
@@ -46,21 +71,22 @@
                                 <form method="post">
                                     {% csrf_token %}
                                     {{ form.username.label_tag }} {{ form.username }}
-
                                     {{ form.email.label_tag }} {{ form.email }}
-
                                     {{ form.password1.label_tag }} {{ form.password1 }}
-
                                     {{ form.password2.label_tag }} {{ form.password2 }}
-                                    
                                     {{ form.user_role.label_tag }} {{ form.user_role }}
                                     
-                                    {{ form.event.label_tag }} {{ form.event }}
-                                 
+                                    <div id="eventField" style="display: none;">
+                                        {{ form.event.label_tag }} {{ form.event }}
+                                    </div>
+                                    <div id="eventList" style="display: none;">
+                                        {{ event_form.event_list.label_tag }} {{ event_form.event_list }}
+                                    </div>
+                                
                                     <span class="text-error">{{ form.errors }}</span>
-                                    <input type="submit" value="Register"
-                                        class="btn btn-pill text-white btn-block btn-primary">
+                                    <input type="submit" value="Register" class="btn btn-pill text-white btn-block btn-primary">
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
